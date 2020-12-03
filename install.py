@@ -26,14 +26,15 @@ src_ext=['extension.py']
 src_ing=['ingester.py', 'iex.py', 'yahoo.py']
 
 ### destination directories
-dst_ext=os.path.join(os.path.expanduser('~'), '.zipline')
+#dst_ext=os.path.join(os.path.expanduser('~'), '.zipline')
+dst_ext=os.path.join(os.path.expanduser('~'), 'zipline-broker/data')
 # check the existence of zipline home
 if not os.path.isdir(dst_ext):
     logging.error("zipline home ('{}') does not exist.")
     sys.exit(1)
 
 dst_ing=bld.__path__[0]
-
+logging.info("src_dir={} dst_ext={} dst_ing={}".format(src_dir,dst_ext,dst_ing))
 
 def copy(filelist, dest, src):
     for f in filelist:
@@ -47,7 +48,7 @@ def copy(filelist, dest, src):
             try:
                 shutil.copyfile(srcf, dstf)
             except Exception as exp:
-                loggin.error("error while copying '{}' to '{}': {}".format(srcf, dest, exp))
+                logging.error("error while copying '{}' to '{}': {}".format(srcf, dest, exp))
                 sys.exit(1)
 
 copy(src_ext, dst_ext, src_dir)
